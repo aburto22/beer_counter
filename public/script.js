@@ -1,44 +1,47 @@
 const url = '/api/counter/';
 
-const updateCounter = (div, load) => {
-  const data = { load };
+const peopleDivs = document.querySelectorAll('.counter-container');
 
-  fetch(`${url}${div.id}`, {
-    method: "PUT",
+const updateCounterServer = async (username, load) => {
+  const data = { load };
+  const fetchOptions = {
+    method: 'PUT',
     body: JSON.stringify(data),
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
-  })
-    .then(res => res.json())
-    .then(json => {
-      div.querySelector("p").textContent = `Counter: ${json.count}`
-    });
+  };
+
+  const res = await fetch(`${url}${username}`, fetchOptions);
+  const json = await res.json();
+
+  return json.count;
 };
 
-const peopleDivs = document.querySelectorAll(".counter-container");
+const updateCounterDOM = (div, count) => {
+  const myDiv = div;
+  myDiv.querySelector('p').textContent = `Counter: ${count}`;
+};
 
-peopleDivs.forEach(div => {
-  const addButton = div.querySelector(".add-button");
-  const subtractButton = div.querySelector(".subtract-button");
+peopleDivs.forEach((div) => {
+  const addButton = div.querySelector('.add-button');
+  const subtractButton = div.querySelector('.subtract-button');
 
-  addButton.addEventListener("click", () => {
-    updateCounter(div, 1);
+  addButton.addEventListener('click', async () => {
+    const counter = await updateCounterServer(div.id, 1);
+    updateCounterDOM(div, counter);
   });
 
-  subtractButton.addEventListener("click", () => {
-    updateCounter(div, -1);
+  subtractButton.addEventListener('click', async () => {
+    const counter = await updateCounterServer(div.id, -1);
+    updateCounterDOM(div, counter);
   });
 });
 
-const fetchCounters = () => {
-  fetch(url)
-    .then(res => res.json())
-    .then(json => {
-      peopleDivs.forEach(div => {
-        div.querySelector("p").textContent = `Counter: ${json[div.id]}`
-      })
-    })
-}
+const fetchCounters = async () => {
+  const res = await fetch(url);
+  const json = await res.json();
+  peopleDivs.forEach((div) => updateCounterDOM(div, json[div.id]));
+};
 
 fetchCounters();
