@@ -1,12 +1,16 @@
 {
   "name": "beer_counter",
   "version": "1.0.0",
+  "engines": {
+    "node": "14.x"
+  },
   "description": "A counter to keep track late arrivals and beers",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start-dev": "nodemon index.js",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "start": "node index.js"
   },
   "author": "Patrycja, Sohel, Thomas and Alejandro",
   "license": "MIT",

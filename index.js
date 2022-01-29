@@ -14,7 +14,7 @@ app.use(router);
 const mongoURI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.x1pbh.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoURI, () => {
-  const port = 5500;
+  const port = process.env.PORT || 5500;
 
   app.listen(port, () => {
     console.log(`Server listening on port ${port}`);
