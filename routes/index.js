@@ -7,30 +7,38 @@ router.get('/', (req, res) => {
   res.send('./index.html');
 });
 
-router.get('/api/counter/', async (req, res) => {
+router.get('/api/counter/', async (req, res, next) => {
   console.log('receiving request');
-  const users = await User.find();
-  const data = {};
-  users.forEach((user) => { data[user.user] = user.counter; });
+  try {
+    const users = await User.find();
+    const data = {};
+    users.forEach((user) => { data[user.user] = user.counter; });
 
-  return res.send(data);
+    return res.send(data);
+  } catch (err) {
+    return next(err);
+  }
 });
 
-router.put('/api/counter/:username/', async (req, res) => {
+router.put('/api/counter/:username/', async (req, res, next) => {
   const { username } = req.params;
   const { load } = req.body;
 
-  const user = await User.findOne({ user: username });
+  try {
+    const user = await User.findOne({ user: username });
 
-  if (user.counter + load < 0) {
+    if (user.counter + load < 0) {
+      return res.send({ count: user.counter });
+    }
+
+    user.counter += load;
+
+    await user.save();
+
     return res.send({ count: user.counter });
+  } catch (err) {
+    return next(err);
   }
-
-  user.counter += load;
-
-  await user.save();
-
-  return res.send({ count: user.counter });
 });
 
 module.exports = router;

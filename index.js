@@ -11,10 +11,11 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(router);
 
+app.use((error, req, res) => res.send(error));
+
 const mongoURI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.x1pbh.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
 
 mongoose.connect(mongoURI, () => {
-  console.log('connected to mongoose');
   const port = process.env.PORT || 5500;
 
   app.listen(port, () => {
