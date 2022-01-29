@@ -8,7 +8,6 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/counter/', async (req, res, next) => {
-  console.log('receiving request');
   try {
     const users = await User.find();
     const data = {};
