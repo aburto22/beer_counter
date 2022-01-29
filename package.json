@@ -1,0 +1,17 @@
+{
+  "name": "beer_counter",
+  "version": "1.0.0",
+  "description": "A counter to keep track late arrivals and beers",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Patrycja, Sohel, Thomas and Alejandro",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
