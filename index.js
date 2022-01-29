@@ -15,6 +15,10 @@ app.use((error, req, res) => res.send(error));
 
 const mongoURI = `mongodb+srv://${process.env.MONGODB_USERNAME}:${process.env.MONGODB_PASSWORD}@cluster0.x1pbh.mongodb.net/${process.env.MONGODB_DB}?retryWrites=true&w=majority`;
 
+console.log('process.env.MONGODB_USERNAME :>> ', process.env.MONGODB_USERNAME);
+console.log('process.env.MONGODB_PASSWORD :>> ', process.env.MONGODB_PASSWORD);
+console.log('process.env.MONGODB_DB :>> ', process.env.MONGODB_DB);
+
 mongoose.connect(mongoURI, () => {
   const port = process.env.PORT || 5500;
 
