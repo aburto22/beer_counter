@@ -8,6 +8,7 @@ router.get('/', (req, res) => {
 });
 
 router.get('/api/counter/', async (req, res) => {
+  console.log('receiving request');
   const users = await User.find();
   const data = {};
   users.forEach((user) => { data[user.user] = user.counter; });
